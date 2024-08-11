@@ -22,16 +22,24 @@
 
         <div class="gap-4 d-flex flex-column">
             <div class="alert alert-light d-flex justify-content-between align-items-center" role="alert">
-                <form action="#" method="POST">
+                <form action="{{ route('admin.user-update', $user->id) }}" method="POST">
                     @csrf
+                    @method('PUT')
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
-                        <input type="text" name="name" value="Ayush Kathariya" class="form-control" id="name">
+                        <input type="text" name="name" value="{{ $user->name }}" class="form-control"
+                            id="name">
+                        @error('name')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" name="email" value="ayushkathariya7@gmail.com" class="form-control"
+                        <input type="email" name="email" value="{{ $user->email }}" class="form-control"
                             id="email">
+                        @error('email')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="mt-2">
                         <input type="submit" value="Update" class="btn btn-primary">

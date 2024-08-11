@@ -19,23 +19,32 @@
         </div><!-- /.container-fluid -->
     </div>
     <div class="px-3">
-
-        <div class="d-flex flex-column gap-4">
-            <div class="alert alert-light d-flex justify-content-between align-items-center" role="alert">
-                <div>
-                    <p class="fw-bold">Title</p>
-                    <p>Go To Gym</p>
+        <div class="gap-4 d-flex flex-column">
+            @if ($todos)
+                @foreach ($todos as $todo)
+                    <div class="alert alert-light d-flex justify-content-between align-items-center" role="alert">
+                        <div>
+                            <p class="fw-bold">Title</p>
+                            <p>{{ $todo->title }}</p>
+                        </div>
+                        <div>
+                            <p class="fw-bold">User</p>
+                            <p>{{ $todo->user->name }}</p>
+                        </div>
+                        <div class="d-flex">
+                            <a href="{{ route('admin.todo-detail', $todo->id) }}" class="btn btn-warning">Edit</a>
+                            <form action="{{ route('admin.todo-destroy', $todo->id) }}" method="POST" class="ml-1">
+                                @csrf
+                                @method('DELETE')
+                                <input type="submit" value="Delete" class="btn btn-danger">
+                            </form>
+                        </div>
+                    </div>
+                @endforeach
+                <div class="mt-3 d-flex justify-content-center align-items-center">
+                    {{ $todos->links('pagination::bootstrap-4') }}
                 </div>
-                <div>
-                    <p class="fw-bold">User</p>
-                    <p>Ayush Kathariya</p>
-                </div>
-                <div>
-                    <a href="{{ route('admin.todo-detail', 1) }}" class="btn btn-warning">Edit</a>
-                    <a href="#" class="btn btn-danger">Delete</a>
-                </div>
-            </div>
+            @endif
         </div>
-
     </div>
 @endsection

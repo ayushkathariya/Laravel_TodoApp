@@ -21,21 +21,25 @@
 
     <div class="px-3">
 
-        <div class="d-flex flex-column gap-4">
-            <div class="alert alert-light d-flex justify-content-between align-items-center" role="alert">
-                <div>
-                    <p class="fw-bold">Name</p>
-                    <p>Ayush Kathariya</p>
-                </div>
-                <div>
-                    <p class="fw-bold">Email</p>
-                    <p>ayushkathariya7@gmail.com</p>
-                </div>
-                <div>
-                    <a href="{{ route('admin.user-detail', 2) }}" class="btn btn-warning">Edit</a>
-                    <a href="#" class="btn btn-danger">Delete</a>
-                </div>
-            </div>
+        <div class="gap-4 d-flex flex-column">
+            @if ($users)
+                @foreach ($users as $user)
+                    <div class="alert alert-light d-flex justify-content-between align-items-center" role="alert">
+                        <div>
+                            <p class="fw-bold">Name</p>
+                            <p>{{ $user->name }}</p>
+                        </div>
+                        <div>
+                            <p class="fw-bold">Email</p>
+                            <p>{{ $user->email }}</p>
+                        </div>
+                        <div>
+                            <a href="{{ route('admin.user-detail', $user->id) }}" class="btn btn-warning">Edit</a>
+                            <a href="#" class="btn btn-danger">Delete</a>
+                        </div>
+                    </div>
+                @endforeach
+            @endif
         </div>
 
     </div>

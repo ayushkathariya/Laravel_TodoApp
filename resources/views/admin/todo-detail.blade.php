@@ -20,25 +20,58 @@
     </div>
     <div class="px-3">
 
-        <div class="d-flex flex-column gap-4">
+        <div class="gap-4 d-flex flex-column">
             <div class="alert alert-light d-flex justify-content-between align-items-center" role="alert">
-                <form action="#" method="POST">
+                {{-- <form action="{{ route('admin.todo-update', $todo->id) }}" method="POST">
                     @csrf
+                    @method('PUT')
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Title</label>
-                        <input type="text" name="title" value="Go To Gym" class="form-control"
+                        <input type="text" name="title" value="{{ $todo->title }}" class="form-control"
                             id="exampleFormControlInput1">
                     </div>
                     <div>
                         <label class="form-label" for="flexRadioDefault1">
                             Completed
                         </label>
-                        <input name="is_completed" class="form-check-input ml-1" type="radio" id="flexRadioDefault1">
+                        <input name="is_completed" class="ml-1 form-check-input" type="radio" id="flexRadioDefault1"
+                            {{ old('is_completed', $todo->is_completed ?? 0) == 1 ? 'checked' : '' }}>
                     </div>
                     <div class="mt-2">
                         <input type="submit" value="Update" class="btn btn-primary">
                     </div>
+                </form> --}}
+                <form action="{{ route('admin.todo-update', $todo->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" name="title" value="{{ old('title', $todo->title) }}" class="form-control"
+                            id="title">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Status</label>
+                        <div class="form-check">
+                            <input name="is_completed" class="form-check-input" type="radio" id="completed" value="1"
+                                {{ old('is_completed', $todo->is_completed) == 1 ? 'checked' : '' }}>
+                            <label class="form-check-label" for="completed">
+                                Completed
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input name="is_completed" class="form-check-input" type="radio" id="not_completed"
+                                value="0" {{ old('is_completed', $todo->is_completed) == 0 ? 'checked' : '' }}>
+                            <label class="form-check-label" for="not_completed">
+                                Not Completed
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Update</button>
                 </form>
+
             </div>
         </div>
 

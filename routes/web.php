@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TodoController;
+use App\Http\Controllers\Admin\TodoController as AdminTodoController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 
 /* Home Page Route */
 
@@ -30,11 +33,14 @@ Route::middleware('auth')->group(function () {
 /* Admin Routes */
 
 Route::prefix('admin')->group(function () {
-    Route::view('dashboard', 'admin.dashboard')->name('admin.dashboard');
-    Route::view('users', 'admin.users')->name('admin.users');
-    Route::view('users/{id}', 'admin.user-detail')->name('admin.user-detail');
-    Route::view('todos', 'admin.todos')->name('admin.todos');
-    Route::view('todos/{id}', 'admin.todo-detail')->name('admin.todo-detail');
+    Route::get('dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('users', [AdminUserController::class, 'index'])->name('admin.users');
+    Route::get('users/{id}', [AdminUserController::class, 'edit'])->name('admin.user-detail');
+    Route::put('users/{id}', [AdminUserController::class, 'update'])->name('admin.user-update');
+    Route::get('todos', [AdminTodoController::class, 'index'])->name('admin.todos');
+    Route::get('todos/{id}', [AdminTodoController::class, 'edit'])->name('admin.todo-detail');
+    Route::put('todos/{id}', [AdminTodoController::class, 'update'])->name('admin.todo-update');
+    Route::delete('todos/{id}', [AdminTodoController::class, 'destroy'])->name('admin.todo-destroy');
 });
 
 /* API Routes */
