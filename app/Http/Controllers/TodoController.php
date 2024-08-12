@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Todo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class TodoController extends Controller
 {
@@ -55,17 +56,19 @@ class TodoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Todo $todo)
     {
-        $todo = Todo::find($id);
+        Gate::authorize('edit', $todo);
+
         return view('todo-edit', ['todo' => $todo]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Todo $todo)
     {
+        Gate::authorize('update', $todo);
 
         // Validate the incoming request
         $request->validate([
@@ -73,7 +76,6 @@ class TodoController extends Controller
         ]);
 
 
-        $todo = Todo::find($id);
         $todo->title = $request->title;
         $todo->save();
 
@@ -83,9 +85,11 @@ class TodoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Todo $todo)
     {
-        Todo::find($id)->delete();
+        Gate::authorize('destroy', $todo);
+
+        $todo->delete();
 
         return redirect()->route('dashboard')->with('status', 'Todo deleted successfully!');
     }

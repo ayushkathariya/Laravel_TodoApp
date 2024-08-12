@@ -18,9 +18,9 @@ Route::get('/', function () {
 Route::get('/dashboard', [TodoController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/create-post', [TodoController::class, 'create'])->name('todo.create');
 Route::post('/create-post', [TodoController::class, 'store'])->name('todo.store');
-Route::get('/todos/{id}/edit', [TodoController::class, 'edit'])->name('todo.edit');
-Route::put('/todos/{id}/edit', [TodoController::class, 'update'])->name('todo.update');
-Route::delete('/todos/{id}/destroy', [TodoController::class, 'destroy'])->name('todo.destroy');
+Route::get('/todos/{todo}/edit', [TodoController::class, 'edit'])->name('todo.edit');
+Route::put('/todos/{todo}/edit', [TodoController::class, 'update'])->name('todo.update');
+Route::delete('/todos/{todo}/destroy', [TodoController::class, 'destroy'])->name('todo.destroy');
 
 /* User Profile Routes */
 
