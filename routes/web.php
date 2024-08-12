@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TodoController;
@@ -12,6 +13,10 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
+
+/* Email Routes */
+
+Route::get('send-email', [MailController::class, 'sendEmail']);
 
 /* Todo Routes */
 
