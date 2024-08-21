@@ -24,39 +24,64 @@
                         </div>
                     </div>
                 </div>
+
             </div>
-        @endif
+    </div>
+    @endif
 
 
-        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="flex flex-col gap-4">
-                @if ($todos)
-                    @foreach ($todos as $todo)
-                        <div class="overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
-                            <div class="p-6 text-gray-900 dark:text-gray-100">
-                                <div class="flex items-center justify-between">
-                                    <div>
-                                        <p>{{ $todo->title }}</p>
-                                    </div>
-                                    <div class="flex items-center gap-4">
-                                        <a href="{{ route('todo.edit', $todo->id) }}"
-                                            class="block px-4 py-2 font-medium text-white duration-150 bg-yellow-600 rounded-lg shadow-lg hover:bg-yellow-500 active:bg-indigo-700 hover:shadow-none">Edit</a>
-                                        <form action="{{ route('todo.destroy', $todo->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <input value="Delete" type="submit"
-                                                class="block px-4 py-2 font-medium text-white duration-150 bg-red-600 rounded-lg shadow-lg cursor-pointer hover:bg-red-500 active:bg-indigo-700 hover:shadow-none">
-                                        </form>
-                                    </div>
-                                </div>
-
+    <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div class="flex flex-col gap-4">
+            @if ($todos)
+                <div class="grid grid-cols-1 gap-10">
+                    <div>
+                        <form action="{{ route('dashboard') }}" method="GET"
+                            class="px-4 bg-gray-200 border rounded py-14">
+                            <div class="text-xl font-bold">Filter</div>
+                            <div class="flex items-center gap-1">
+                                <label for="is_completed" class="font-semibold">Completed</label>
+                                <select name="is_completed" id="is_completed" class="mt-2">
+                                    <option value="">Select</option>
+                                    <option value="1" {{ request('is_completed') == '1' ? 'selected' : '' }}>
+                                        Completed</option>
+                                    <option value="0" {{ request('is_completed') == '0' ? 'selected' : '' }}>Not
+                                        Completed</option>
+                                </select>
                             </div>
-                        </div>
-                    @endforeach
-                @else
-                @endif
-            </div>
+                            <input type="submit" value="Submit"
+                                class="px-6 py-2 mt-3 duration-200 bg-green-500 border rounded cursor-pointer hover:bg-green-600">
+                        </form>
+                    </div>
+                    <div>
+                        @foreach ($todos as $todo)
+                            <div class="overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
+                                <div class="p-6 text-gray-900 dark:text-gray-100">
+                                    <div class="flex items-center justify-between gap-2">
+                                        <div>
+                                            <p>{{ $todo->title }}</p>
+                                        </div>
+                                        <div class="flex items-center gap-4">
+                                            <a href="{{ route('todo.edit', $todo->id) }}"
+                                                class="block px-4 py-2 font-medium text-white duration-150 bg-yellow-600 rounded-lg shadow-lg hover:bg-yellow-500 active:bg-indigo-700 hover:shadow-none">Edit</a>
+                                            <form action="{{ route('todo.destroy', $todo->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <input value="Delete" type="submit"
+                                                    class="block px-4 py-2 font-medium text-white duration-150 bg-red-600 rounded-lg shadow-lg cursor-pointer hover:bg-red-500 active:bg-indigo-700 hover:shadow-none">
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @else
+                <p class="text-xl font-bold text-red-500">No Todos Found</p>
+            @endif
         </div>
+    </div>
     </div>
     </div>
 </x-app-layout>

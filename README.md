@@ -8,6 +8,7 @@ This is a simple todo list application made in laravel having an admin panel.
 -   Authentication and Authorization
 -   CRUD Features
 -   Responsive
+-   Pagination & Filtering
 
 ## Screenshots
 

@@ -13,6 +13,13 @@ class TodoController extends Controller
      */
     public function index(Request $request)
     {
+        $is_completed = $request->input('is_completed');
+
+        if ($is_completed) {
+            $todos = Todo::where('user_id', $request->user()->id)->where('is_completed', $is_completed)->get();
+            return view('dashboard', ['todos' => $todos]);
+        }
+
         $todos = Todo::where('user_id', $request->user()->id)->get();
         return view('dashboard', ['todos' => $todos]);
     }
